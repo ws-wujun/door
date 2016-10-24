@@ -18,7 +18,7 @@ public class DoorController {
 		if (session.getAttribute("userName") == null) {
 			return new ModelAndView("production/login");
 		}
-		
+
 		String userName = session.getAttribute("userName").toString();
 		if (StringUtils.isEmpty(userName)) {
 			return new ModelAndView("production/login");
@@ -32,11 +32,11 @@ public class DoorController {
 	@RequestMapping(value = "/door/login", method = RequestMethod.POST)
 	public ModelAndView login(@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "password", required = false) String password, HttpSession session, Model model) {
-		// TODO login logic 
+		// TODO login logic
 		if ("wujun93".equals(name) && "asdf1234".equals(password)) {
 			// add into session
 			session.setAttribute("userName", name);
-			
+
 			ModelAndView mav = new ModelAndView("redirect:/door/main");
 			mav.addObject("userName", name);
 			return mav;
@@ -52,7 +52,7 @@ public class DoorController {
 		model.addAttribute("userName", userName);
 		return "production/index";
 	}
-	
+
 	@RequestMapping(value = "/door/queryinfo", method = RequestMethod.GET)
 	public String queryInfo(@RequestParam(value = "queryType", required = false) String queryType, Model model) {
 		model.addAttribute("queryType", queryType);
