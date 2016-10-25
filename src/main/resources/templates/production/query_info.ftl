@@ -257,25 +257,21 @@
                   <div class="x_content">
                     <br />
                     <form id="search-shop-info-form" data-parsley-validate class="form-horizontal form-label-left">
-
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="shop-id"> 店铺ID </span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="shop-id" name="shopid" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="shop-id" name="queryKey" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="vender-id"> 商家ID </span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="vender-id" name="venderid" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="shop-name"> 店铺名称 </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="shop-name" name="shopname" class="form-control col-md-7 col-xs-12" type="text">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">搜索字段</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select class="select2_single form-control" tabindex="-1" >
+                            <option value="shopid">店铺Id</option>
+                            <option value="venderid">商家Id</option>
+                            <option value="name">店铺名</option>
+                          </select>
                         </div>
                       </div>
                       <div class="ln_solid"></div>
@@ -284,7 +280,6 @@
                           <button type="submit" class="btn btn-success">搜索</button>
                         </div>
                       </div>
-
                     </form>
                   </div>
                 </div>
