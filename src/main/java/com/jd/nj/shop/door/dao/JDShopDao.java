@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "jd_shop")
-public class JDShop {
+public class JDShopDao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -17,7 +17,7 @@ public class JDShop {
 	private String name;
 	private Integer type;
 
-	public JDShop() {
+	public JDShopDao() {
 	}
 
 	public Long getId() {

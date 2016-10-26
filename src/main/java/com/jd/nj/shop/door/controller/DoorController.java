@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jd.nj.shop.door.dao.JDShop;
+import com.jd.nj.shop.door.dao.JDShopDao;
 import com.jd.nj.shop.door.dao.service.JDShopRepository;
+import com.jd.nj.shop.door.service.GetShopDetailInfoService;
 
 @Controller
 public class DoorController {
@@ -61,14 +62,14 @@ public class DoorController {
 	}
 
 	@RequestMapping(value = "/door/queryinfo", method = RequestMethod.GET)
-	public String queryInfo(@RequestParam(value = "queryType", required = true) String queryType,
-			@RequestParam(value = "queryKey", required = true) String queryKey, Model model) {
+	public String queryInfo(@RequestParam(value = "queryType", required = false) String queryType,
+			@RequestParam(value = "queryKey", required = false) String queryKey, Model model) {
 		model.addAttribute("queryType", queryType);
 
 		Long venderId = 22904L;
-		List<JDShop> res = jdshopRepository.findByVenderid(venderId);
+		List<JDShopDao> res = jdshopRepository.findByVenderid(venderId);
 		if (CollectionUtils.isEmpty(res) != true) {
-			JDShop shopInfo = res.get(0);
+			JDShopDao shopInfo = res.get(0);
 			Long shopId = shopInfo.getShopid();
 			String shopName = shopInfo.getName();
 			model.addAttribute("shopName", shopName);
@@ -76,10 +77,15 @@ public class DoorController {
 			model.addAttribute("venderId", venderId);
 			System.out.println("queried value");
 		}
+		
+		//getShopDetailInfoServiceImpl.refreshJDShopInfos(50000, 51000, 0, 0);
 
 		return "production/query_info";
 	}
 
 	@Autowired
 	private JDShopRepository jdshopRepository;
+	
+	@Autowired
+	private GetShopDetailInfoService getShopDetailInfoServiceImpl;
 }

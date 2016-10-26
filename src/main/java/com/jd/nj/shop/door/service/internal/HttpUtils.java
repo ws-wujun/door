@@ -8,12 +8,15 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -53,7 +56,16 @@ public class HttpUtils {
 			}
 		}
 
-		CloseableHttpClient httpclient = HttpClients.createDefault();
+		PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
+		// Increase max total connection to 200
+		cm.setMaxTotal(200);
+		// Increase default max connection per route to 20
+		cm.setDefaultMaxPerRoute(20);
+		// Increase max connections for localhost:80 to 50
+		HttpHost localhost = new HttpHost("locahost", 80);
+		cm.setMaxPerRoute(new HttpRoute(localhost), 50);
+		CloseableHttpClient httpclient = HttpClients.custom().setConnectionManager(cm).build();
+		//CloseableHttpClient httpclient = HttpClients.createDefault();
 		try {
 			HttpGet httpget = new HttpGet(url + "?" + sb.toString());
 			System.out.println("Executing request " + httpget.getRequestLine());
@@ -88,7 +100,7 @@ public class HttpUtils {
 		}
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		String url = "http://shopbeta.m.jd.care/getShopDetail";
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("body", "{\"shopId\":\"74608\"}");
@@ -100,7 +112,7 @@ public class HttpUtils {
 		JSONObject jsonObj = (JSONObject) map.get("result");
 		System.out.println(jsonObj.toString());
 		ShopDetailInfo info = (ShopDetailInfo) JSON.parseObject(jsonObj.toString(), ShopDetailInfo.class);
-		System.out.println("result=" + info.getVenderId());
-	}
+		System.out.println("venderid=" + info.getVenderId());
+	}*/
 	
 }
