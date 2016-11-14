@@ -10,4 +10,5 @@ public interface JDShopRepository extends CrudRepository<JDShopDao, Long> {
 
 	List<JDShopDao> findByVenderid(Long venderid);
 	List<JDShopDao> findByShopid(Long shopId);
+	List<JDShopDao> findAll();
 }

@@ -14,8 +14,8 @@ public class RefreshJDShopDetailInfosJob extends QuartzJobBean {
 	@Override
 	protected void executeInternal(JobExecutionContext arg0) throws JobExecutionException {
 		System.out.println("[" + getCurrentTime() + "] executing start...");
-		GetShopDetailInfoService getShopDetailInfoServiceImpl = (GetShopDetailInfoService) arg0.getJobDetail().getJobDataMap().get("service");
-		getShopDetailInfoServiceImpl.refreshJDShopInfos(0, 5000000, 1000000000, 1000010000);
+		//GetShopDetailInfoService getShopDetailInfoServiceImpl = (GetShopDetailInfoService) arg0.getJobDetail().getJobDataMap().get("service");
+		//getShopDetailInfoServiceImpl.refreshJDShopInfos(0, 5000000, 1000000000, 1000010000);
 		System.out.println("[" + getCurrentTime() + "] executing finished...");
 	}
 	

@@ -29,7 +29,7 @@
       <li><a><i class="fa fa-tasks"></i> 项目信息维护 <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
           <li><a href="/door/projects">项目信息一览</a></li>
-          <li><a href="projects.html">增加项目</a></li>
+          <li><a href="/door/addProjects">增加项目</a></li>
         </ul>
       </li>
       <li><a><i class="fa fa-laptop"></i> 接口信息维护 <span class="fa fa-chevron-down"></span></a>

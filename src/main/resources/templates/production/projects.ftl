@@ -28,7 +28,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+              <a href="/door" class="site_title"><i class="fa fa-paw"></i> <span>Shop Door</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -199,9 +199,9 @@
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                         <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
+                          <li><a href="#">新增项目</a>
                           </li>
-                          <li><a href="#">Settings 2</a>
+                          <li><a href="#">显示全部</a>
                           </li>
                         </ul>
                       </li>
@@ -225,10 +225,11 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <#list projects as project>
                         <tr>
-                          <td>#</td>
+                          <td>${project.projectId}</td>
                           <td>
-                            <a>mobile-shop-soa</a>
+                            <a>${project.projectName}</a>
                             <br />
                             <small>Created 01.01.2015</small>
                           </td>
@@ -249,116 +250,23 @@
                             </ul>
                           </td>
                           <td class="project_progress">
-                          	<p>店铺后台管理系统店铺后台管理系统店铺后台管理系统店铺后台管理系统店铺后台管理系统</p>
+                          	<p>${project.projectDescription}</p>
                           </td>
                           <td>
-                            <button type="button" class="btn btn-cancel btn-xs">废弃</button>
+                            <#if project.isValid == 0>
+                                <button type="button" class="btn btn-cancel btn-xs">无效
+                            <#else>
+                                <button type="button" class="btn btn-success btn-xs">有效
+                            </#if>
+                            </button>
                           </td>
                           <td>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> 查看 </a>
+                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 修改 </a>
+                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
                           </td>
                         </tr>
-                        <tr>
-                          <td>#</td>
-                          <td>
-                            <a>Pesamakini Backend UI</a>
-                            <br />
-                            <small>Created 01.01.2015</small>
-                          </td>
-                          <td>
-                            <ul class="list-inline">
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                            </ul>
-                          </td>
-                          <td class="project_progress">
-                          	<p>店铺后台管理系统店铺后台管理系统店铺后台管理系统店铺后台管理系统店铺后台管理系统</p>
-                          </td>
-                          <td>
-                            <button type="button" class="btn btn-success btn-xs">有效</button>
-                          </td>
-                          <td>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>#</td>
-                          <td>
-                            <a>Pesamakini Backend UI</a>
-                            <br />
-                            <small>Created 01.01.2015</small>
-                          </td>
-                          <td>
-                            <ul class="list-inline">
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                            </ul>
-                          </td>
-                          <td class="project_progress">
-                          	<p>店铺后台管理系统店铺后台管理系统店铺后台管理系统店铺后台管理系统店铺后台管理系统</p>
-                          </td>
-                          <td>
-                            <button type="button" class="btn btn-success btn-xs">有效</button>
-                          </td>
-                          <td>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>#</td>
-                          <td>
-                            <a>Pesamakini Backend UI</a>
-                            <br />
-                            <small>Created 01.01.2015</small>
-                          </td>
-                          <td>
-                            <ul class="list-inline">
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                            </ul>
-                          </td>
-                          <td class="project_progress">
-                          	<p>店铺后台管理系统店铺后台管理系统店铺后台管理系统店铺后台管理系统店铺后台管理系统</p>
-                          </td>
-                          <td>
-                            <button type="button" class="btn btn-success btn-xs">有效</button>
-                          </td>
-                          <td>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </td>
-                        </tr>
+                        </#list>
                       </tbody>
                     </table>
                     <!-- end project list -->
