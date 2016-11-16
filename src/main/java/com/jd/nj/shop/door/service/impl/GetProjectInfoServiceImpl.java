@@ -50,4 +50,13 @@ public class GetProjectInfoServiceImpl implements GetProjectInfoService {
 		return null;
 	}
 
+	@Override
+	public boolean addNewProjectInfoIntoDB(JDProjectInfoDao projectInfo) {
+		JDProjectInfoDao res = jdProjectInfoRepository.save(projectInfo);
+		if (res != null) {
+			return true;
+		}
+		return false;
+	}
+
 }

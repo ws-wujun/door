@@ -12,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jd.nj.shop.door.dao.JDProjectInfoDao;
@@ -111,6 +112,45 @@ public class DoorController {
 		addProjectInfosIntoModelAndView(mav);
 
 		return mav;
+	}
+	
+	@RequestMapping(value = "/door/addProjects", method = RequestMethod.GET)
+	public ModelAndView addProjectsGetRequest() {
+		
+		/*
+		 * 组装传入到页面中的Model值。
+		 */
+		ModelAndView mav = new ModelAndView("production/addProject");
+		// 获取项目一览以显示项目一览
+		addProjectInfosIntoModelAndView(mav);
+
+		return mav;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/door/addProjects", method = RequestMethod.POST)
+	@ResponseBody
+	public String addProjectsPostRequest(@RequestParam(value = "projectName", required = false) String projectName,
+			@RequestParam(value = "chargerNames", required = false) String chargerNames,
+			@RequestParam(value = "projectDes", required = false) String projectDescription,
+			@RequestParam(value = "projectValid", required = false) String projectValid) {
+		String result = "ok";
+		JDProjectInfoDao projectInfo = new JDProjectInfoDao();
+		projectInfo.setProjectId(0L);
+		projectInfo.setChargerNames(chargerNames);
+		projectInfo.setProjectName(projectName);
+		projectInfo.setProjectDescription(projectDescription);
+		projectInfo.setDepartmentCode(1);
+		if ("true".equals(projectValid)) {
+			projectInfo.setIsValid(1);
+		} else {
+			projectInfo.setIsValid(0);
+		}
+		if (!getProjectInfoService.addNewProjectInfoIntoDB(projectInfo)) {
+			result = "error";
+		}
+
+		return result;
 	}
 	
 	/**

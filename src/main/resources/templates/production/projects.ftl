@@ -231,24 +231,8 @@
                           <td>
                             <a>${project.projectName}</a>
                             <br />
-                            <small>Created 01.01.2015</small>
                           </td>
-                          <td>
-                            <ul class="list-inline">
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="../images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                            </ul>
-                          </td>
+                          <td>${project.chargerNames}</td>
                           <td class="project_progress">
                           	<p>${project.projectDescription}</p>
                           </td>
