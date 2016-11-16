@@ -23,7 +23,14 @@ public interface GetProjectInfoService {
 	 * @return 项目信息
 	 */
 	JDProjectInfoDao getProjectInfoById(Long id);
-	
-	
+
+	/**
+	 * 保存项目信息
+	 * 
+	 * @param projectInfo
+	 *            项目信息
+	 * @return 保存成功，返回true；否则返回false。
+	 */
+	boolean addNewProjectInfoIntoDB(JDProjectInfoDao projectInfo);
 
 }
