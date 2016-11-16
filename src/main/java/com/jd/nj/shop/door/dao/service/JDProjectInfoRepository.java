@@ -10,4 +10,5 @@ public interface JDProjectInfoRepository extends CrudRepository<JDProjectInfoDao
 	
 	List<JDProjectInfoDao> findByProjectId(Long projectId);
 	
+	List<JDProjectInfoDao> findByIsValid(Integer isValid);
 }
