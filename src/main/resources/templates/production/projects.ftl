@@ -247,7 +247,7 @@
                           <td>
                             <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> 查看 </a>
                             <a href="/door/addProjects?projectId=${project.projectId}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 修改 </a>
-                            <a href="/door/invalidProjects?projectId=${project.projectId}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
+                            <a href="/door/projects" class="btn btn-danger btn-xs" onclick="del('${project.projectId}')"><i class="fa fa-trash-o"></i> 删除 </a>
                           </td>
                         </tr>
                         </#list>
@@ -287,5 +287,30 @@
     
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+    
+    <script>
+    	function del(projectId) {
+    	    if(confirm("项目置为无效？")){
+    	    	//同步发起ajax请求，设置项目为无效。
+    	    	$.ajax({ 
+					type: 'POST',
+					url: "/door/invalidProjects",
+				    data: {
+			        	"projectId": projectId
+			        },
+				    success: function (data) {
+				        if (data == "ok") {
+				        	alert("设置成功！");
+				        } else {
+				        	alert("设置失败！");
+				        }
+			      	},
+					async:false
+				});
+    	    	return true;
+    	    }
+    	    return false;
+    	}
+    </script>
   </body>
 </html>

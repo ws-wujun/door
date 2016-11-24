@@ -220,14 +220,15 @@ public class DoorController {
 	/**
 	 * 删除某个项目（实际是无效某些项目）
 	 */
-	@RequestMapping(value = "/door/invalidProjects", method = RequestMethod.GET)
+	@RequestMapping(value = "/door/invalidProjects", method = RequestMethod.POST)
+	@ResponseBody
 	public String invalidProjects(@RequestParam(value = "projectId", required = true) String projectId) {		
 		Long pId = null;
 		try {
 			pId = Long.valueOf(projectId);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return "/door/projects";
+			return "error";
 		}
 		
 		// 先查询出记录，再更新成无效记录
@@ -235,7 +236,7 @@ public class DoorController {
 		projectInfo.setIsValid(0);
 		getProjectInfoService.updateProjectInfoIntoDB(pId, projectInfo);
 		
-		return "/door/projects";
+		return "ok";
 	}
 	
 	
