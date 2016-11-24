@@ -436,21 +436,61 @@
         var chargerNames = $("#charger-names").val();
         var projectDes = $("#project-des").val();
         var isValid = $('input[name="projectValid"]:checked ').val();
-	    $.post(
-	      "/door/addProjects", 
-	      { 
-	        "projectName": projectName, 
-	        "chargerNames": chargerNames, 
-	        "projectDes": projectDes, 
-	        "projectValid": isValid 
-	      },
-	      function (data) {
-	        if (data == "ok") {
-	          alert("添加成功！");
-	        }
-	      }
-	    )
+        alert(isValid);
+        if ('${modifyProject}' == 'false') {
+		    $.post(
+		      "/door/addProjects", 
+		      { 
+		        "projectName": projectName, 
+		        "chargerNames": chargerNames, 
+		        "projectDes": projectDes, 
+		        "projectValid": isValid 
+		      },
+		      function (data) {
+		        if (data == "ok") {
+		          alert("添加成功！");
+		        }
+		      }
+		    );
+		} else {
+			$.post(
+		      "/door/modifyProjects", 
+		      { 
+		        "projectId": ${project.projectId!''},
+		        "projectName": projectName, 
+		        "chargerNames": chargerNames, 
+		        "projectDes": projectDes, 
+		        "projectValid": isValid 
+		      },
+		      function (data) {
+		        if (data == "ok") {
+		          alert("操作成功！");
+		        }
+		      }
+		    );
+		}
     });
     </script>
+    
+    <script>
+    <!-- 页面初始化,填入正确的值 -->
+    $(document).ready(function() {
+    	$("#project-name").val("${project.projectName!''}");
+    	$("#charger-names").val("${project.chargerNames!''}");
+    	$("#project-des").val("${project.projectDescription!''}");
+    	if ('${project.isValid!'1'}' == '1') {
+    		$("#validBtn").attr("checked", "checked");
+    		$("#invalidBtn").removeAttr("checked");
+    		$("#validBtnLbl").addClass('active');
+    		$("#invalidBtnLbl").removeClass('active');
+    	} else {
+    		$("#invalidBtn").attr("checked", "checked");
+    		$("#validBtn").removeAttr("checked");
+    		$("#invalidBtnLbl").addClass('active');
+    		$("#validBtnLbl").removeClass('active');
+    	}
+    });
+    </script>
+    
   </body>
 </html>

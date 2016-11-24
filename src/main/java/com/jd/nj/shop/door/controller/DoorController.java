@@ -110,30 +110,56 @@ public class DoorController {
 		ModelAndView mav = new ModelAndView("production/projects");
 		// 获取项目一览以显示项目一览
 		addProjectInfosIntoModelAndView(mav);
+		
+		/*
+		 * 查询所有的项目（包含有效和无效的项目）
+		 */
+		List<JDProjectInfoDao> rprojects = getProjectInfoService.getAllProjects(true);
+		mav.addObject("rprojects", rprojects);
 
 		return mav;
 	}
 	
 	@RequestMapping(value = "/door/addProjects", method = RequestMethod.GET)
-	public ModelAndView addProjectsGetRequest() {
-		
+	public ModelAndView addProjectsGetRequest(@RequestParam(value = "projectId", required = false) String projectId) {
 		/*
 		 * 组装传入到页面中的Model值。
 		 */
 		ModelAndView mav = new ModelAndView("production/addProject");
 		// 获取项目一览以显示项目一览
 		addProjectInfosIntoModelAndView(mav);
+		
+		/*
+		 * 看是否传入了projectId，如果传入了，从数据库查询出来，显示在页面中
+		 */
+		if (StringUtils.isEmpty(projectId) == false) {
+			try {
+				Long pId = Long.valueOf(projectId);
+				JDProjectInfoDao project = getProjectInfoService.getProjectInfoById(pId);
+				mav.addObject("project", project);
+			} catch (NumberFormatException ex) {
+				ex.printStackTrace();
+			}
+			
+			mav.addObject("modifyProject", "true");
+		} else {
+			JDProjectInfoDao project = new JDProjectInfoDao();
+			mav.addObject("project", project);
+			mav.addObject("modifyProject", "false");
+		}
 
 		return mav;
 	}
 	
-	@SuppressWarnings("unchecked")
+	/**
+	 * 新增项目
+	 */
 	@RequestMapping(value = "/door/addProjects", method = RequestMethod.POST)
 	@ResponseBody
-	public String addProjectsPostRequest(@RequestParam(value = "projectName", required = false) String projectName,
-			@RequestParam(value = "chargerNames", required = false) String chargerNames,
-			@RequestParam(value = "projectDes", required = false) String projectDescription,
-			@RequestParam(value = "projectValid", required = false) String projectValid) {
+	public String addProjectsPostRequest(@RequestParam(value = "projectName", required = true) String projectName,
+			@RequestParam(value = "chargerNames", required = true) String chargerNames,
+			@RequestParam(value = "projectDes", required = true) String projectDescription,
+			@RequestParam(value = "projectValid", required = true) String projectValid) {
 		String result = "ok";
 		JDProjectInfoDao projectInfo = new JDProjectInfoDao();
 		projectInfo.setProjectId(0L);
@@ -154,8 +180,68 @@ public class DoorController {
 	}
 	
 	/**
+	 * 新增项目
+	 */
+	@RequestMapping(value = "/door/modifyProjects", method = RequestMethod.POST)
+	@ResponseBody
+	public String modifyProjectsPostRequest(@RequestParam(value = "projectId", required = true) String projectId,
+			@RequestParam(value = "projectName", required = true) String projectName,
+			@RequestParam(value = "chargerNames", required = true) String chargerNames,
+			@RequestParam(value = "projectDes", required = true) String projectDescription,
+			@RequestParam(value = "projectValid", required = true) String projectValid) {
+		String result = "ok";
+		
+		Long pId = null;
+		try {
+			pId = Long.valueOf(projectId);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "error";
+		}
+		
+		JDProjectInfoDao projectInfo = new JDProjectInfoDao();
+		projectInfo.setProjectId(pId);
+		projectInfo.setChargerNames(chargerNames);
+		projectInfo.setProjectName(projectName);
+		projectInfo.setProjectDescription(projectDescription);
+		projectInfo.setDepartmentCode(1);
+		if ("true".equals(projectValid)) {
+			projectInfo.setIsValid(1);
+		} else {
+			projectInfo.setIsValid(0);
+		}
+		if (!getProjectInfoService.updateProjectInfoIntoDB(pId, projectInfo)) {
+			result = "error";
+		}
+
+		return result;
+	}
+	
+	/**
+	 * 删除某个项目（实际是无效某些项目）
+	 */
+	@RequestMapping(value = "/door/invalidProjects", method = RequestMethod.GET)
+	public String invalidProjects(@RequestParam(value = "projectId", required = true) String projectId) {		
+		Long pId = null;
+		try {
+			pId = Long.valueOf(projectId);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "/door/projects";
+		}
+		
+		// 先查询出记录，再更新成无效记录
+		JDProjectInfoDao projectInfo = getProjectInfoService.getProjectInfoById(pId);
+		projectInfo.setIsValid(0);
+		getProjectInfoService.updateProjectInfoIntoDB(pId, projectInfo);
+		
+		return "/door/projects";
+	}
+	
+	
+	/**
 	 * 主页面中，存在左边菜单，需要显示项目一览。
-	 * 这里从数据库中获取项目一览。
+	 * 这里从数据库中获取项目一览，而且只返回有效的项目。
 	 */
 	private void addProjectInfosIntoModelAndView(ModelAndView mav) {
 		List<JDProjectInfoDao> projects = getProjectInfoService.getAllProjects(true);

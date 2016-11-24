@@ -32,5 +32,13 @@ public interface GetProjectInfoService {
 	 * @return 保存成功，返回true；否则返回false。
 	 */
 	boolean addNewProjectInfoIntoDB(JDProjectInfoDao projectInfo);
+	
+	/**
+	 * 更新项目信息
+	 * @param projectId 项目id
+	 * @param newObj 项目新值
+	 * @return 更新成功，返回true；否则返回false。
+	 */
+	boolean updateProjectInfoIntoDB(Long projectId, JDProjectInfoDao newObj);
 
 }

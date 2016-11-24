@@ -199,7 +199,7 @@
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                         <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">新增项目</a>
+                          <li><a href="/door/addProjects">新增项目</a>
                           </li>
                           <li><a href="#">显示全部</a>
                           </li>
@@ -225,7 +225,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <#list projects as project>
+                        <#list rprojects as project>
                         <tr>
                           <td>${project.projectId}</td>
                           <td>
@@ -246,8 +246,8 @@
                           </td>
                           <td>
                             <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> 查看 </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 修改 </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
+                            <a href="/door/addProjects?projectId=${project.projectId}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 修改 </a>
+                            <a href="/door/invalidProjects?projectId=${project.projectId}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
                           </td>
                         </tr>
                         </#list>

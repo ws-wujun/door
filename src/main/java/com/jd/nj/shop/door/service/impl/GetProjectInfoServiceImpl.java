@@ -24,7 +24,7 @@ public class GetProjectInfoServiceImpl implements GetProjectInfoService {
 		List<JDProjectInfoDao> projects = null;
 		if (isShowValidOnly == false) {
 			projects = new ArrayList<JDProjectInfoDao>();
-			Iterable<JDProjectInfoDao> allIter = jdProjectInfoRepository.findAll();
+			Iterable<JDProjectInfoDao> allIter = jdProjectInfoRepository.findAllByOrderByProjectIdAsc();
 			if (allIter == null) {
 				return projects;
 			}
@@ -35,7 +35,7 @@ public class GetProjectInfoServiceImpl implements GetProjectInfoService {
 			}
 		} else {
 			// 只查询有效的项目。
-			projects = jdProjectInfoRepository.findByIsValid(1);
+			projects = jdProjectInfoRepository.findByIsValidOrderByProjectIdAsc(1);
 		}
 
 		return projects;
@@ -57,6 +57,23 @@ public class GetProjectInfoServiceImpl implements GetProjectInfoService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean updateProjectInfoIntoDB(Long projectId, JDProjectInfoDao newObj) {
+		JDProjectInfoDao dbObj = jdProjectInfoRepository.findOne(projectId);
+		dbObj.setChargerNames(newObj.getChargerNames());
+		dbObj.setDepartmentCode(newObj.getDepartmentCode());
+		dbObj.setIsValid(newObj.getIsValid());
+		dbObj.setProjectDescription(newObj.getProjectDescription());
+		dbObj.setProjectName(newObj.getProjectName());
+		
+		JDProjectInfoDao res = jdProjectInfoRepository.save(dbObj);
+		if (res == null) {
+			return false;
+		}
+		
+		return true;
 	}
 
 }
